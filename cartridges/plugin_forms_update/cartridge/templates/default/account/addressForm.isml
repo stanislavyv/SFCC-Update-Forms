@@ -1,0 +1,28 @@
+<isset name="privateAddressFields" value="${pdict.addressForm.privateAddress}" scope="page" />
+<isset name="bussinessAddressFields" value="${pdict.addressForm.bussinessAddress}" scope="page" />
+
+<div class="card-header p-0 pb-3">
+    <h4 class="mb-1">${Resource.msg("label.select.address.type", "forms", null)}</h4>
+
+    <div class="form-check js-address-type">
+        <input class="form-check-input" type="radio" name="addressType" id="privateAddress" value="private" checked />
+        <label class="form-check-label" for="privateAddress">
+            ${Resource.msg("label.input.private.address.radio", "forms", null)}
+        </label>
+    </div>
+    <div class="form-check js-address-type">
+        <input class="form-check-input" type="radio" name="addressType" id="bussinessAddress" value="bussiness" />
+        <label class="form-check-label" for="bussinessAddress">
+            ${Resource.msg("label.input.bussiness.address.radio", "forms", null)}
+        </label>
+    </div>
+</div>
+
+
+<div class="js-private-address-form">
+    <isinclude template="account/components/privateAddress" />
+</div>
+
+<div class="js-bussiness-address-form d-none">
+    <isinclude template="account/components/bussinessAddress" />
+</div>

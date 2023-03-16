@@ -117,7 +117,7 @@
   "paths": {
     "base": "./cartridges/app_storefront_base/"
   },
-  "packageName": "feature_update_forms",
+  "packageName": "plugin_forms_update",
   "babel": {
     "presets": [
       "env"

@@ -1,0 +1,202 @@
+<h2 class="my-2 w-100 text-center">${Resource.msg("label.bussiness.address.form", "forms", null)}</h2>
+
+<form action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}" class="address-form js-address-form" method="POST"
+    <isprint value="${bussinessAddressFields.attributes}" encoding="off" />>
+<!-- Address Title -->
+<div class="form-group
+        ${bussinessAddressFields.addressId.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="addressId">
+        <isprint value="${bussinessAddressFields.addressId.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="addressId"
+        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}" <isprint
+        value="${bussinessAddressFields.addressId.attributes}" encoding="off" /> />
+    <div class="invalid-feedback"></div>
+</div>
+
+<!-- Company Name -->
+<div class="form-group
+        ${bussinessAddressFields.companyName.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="companyName">
+        <isprint value="${bussinessAddressFields.companyName.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="companyName"
+        data-missing-error="${Resource.msg('address.companyname.missing', 'forms', null)}" <isprint
+        value="${bussinessAddressFields.companyName.attributes}" encoding="off" /> />
+    <div class="invalid-feedback"></div>
+</div>
+
+<!-- VAT -->
+<div class="form-group
+        ${bussinessAddressFields.vat.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="vat">
+        <isprint value="${bussinessAddressFields.vat.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="vat"
+        data-missing-error="${Resource.msg('address.vat.missing', 'forms', null)}" <isprint
+        value="${bussinessAddressFields.vat.attributes}" encoding="off" /> />
+    <div class="invalid-feedback"></div>
+</div>
+
+<!-- Name -->
+<div class="row">
+    <!-- First Name -->
+    <div class="col-6">
+        <div class="form-group
+                ${bussinessAddressFields.firstName.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="firstName">
+                <isprint value="${bussinessAddressFields.firstName.label}" encoding="htmlcontent" />
+            </label>
+            <input type="text" class="form-control" id="firstName"
+                data-missing-error="${Resource.msg('address.firstname.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.firstName.attributes}" encoding="off" />
+            autocomplete="given-name" />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="col-6">
+        <div class="form-group
+                ${bussinessAddressFields.lastName.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="lastName">
+                <isprint value="${bussinessAddressFields.lastName.label}" encoding="htmlcontent" />
+            </label>
+            <input type="text" class="form-control" id="lastName"
+                data-missing-error="${Resource.msg('address.lastname.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.lastName.attributes}" encoding="off" />
+            autocomplete="family-name" />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Address 1 -->
+<div class="form-group
+        ${bussinessAddressFields.address1.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="address1">
+        <isprint value="${bussinessAddressFields.address1.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="address1"
+        data-missing-error="${Resource.msg('address.address1.missing', 'forms', null)}" <isprint
+        value="${bussinessAddressFields.address1.attributes}" encoding="off" />
+    autocomplete="address-line1" />
+    <div class="invalid-feedback"></div>
+</div>
+
+<!-- Address 2 -->
+<div class="form-group
+        ${bussinessAddressFields.address2.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="address2">
+        <isprint value="${bussinessAddressFields.address2.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="address2" <isprint value="${bussinessAddressFields.address2.attributes}"
+        encoding="off" />
+    autocomplete="billing address-line2" />
+    <div class="invalid-feedback"></div>
+</div>
+
+<!-- Country and State drop downs -->
+<div class="row">
+    <!-- Country  -->
+    <div class="col-6">
+        <div class="form-group
+                ${bussinessAddressFields.country.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="country">
+                <isprint value="${bussinessAddressFields.country.label}" encoding="htmlcontent" />
+            </label>
+            <select class="form-control" id="country"
+                data-missing-error="${Resource.msg('address.country.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.country.attributes}" encoding="off" />
+            autocomplete="country">
+            <isloop items=${bussinessAddressFields.country.options} var="country">
+                <option id="${country.id}" value="${country.htmlValue}" <isif condition="${country.selected}">selected
+                    </isif>>${country.label}</option>
+            </isloop>
+            </select>
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+
+    <!-- State  -->
+    <div class="col-6">
+        <div class="form-group
+                ${bussinessAddressFields.states.stateCode.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="state">
+                <isprint value="${bussinessAddressFields.states.stateCode.label}" encoding="htmlcontent" />
+            </label>
+            <select class="form-control" id="state"
+                data-missing-error="${Resource.msg('address.state.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.states.stateCode.attributes}" encoding="off" />
+            autocomplete="address-level1">
+            <isloop items=${bussinessAddressFields.states.stateCode.options} var="state">
+                <option id="${state.id}" value="${state.htmlValue}" <isif condition="${state.selected}">selected</isif>
+                    >${state.label || ' '}</option>
+            </isloop>
+            </select>
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+</div>
+
+<!-- City and ZIP -->
+<div class="row">
+    <div class="col-6">
+        <!-- City  -->
+        <div class="form-group
+                ${bussinessAddressFields.city.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="city">
+                <isprint value="${bussinessAddressFields.city.label}" encoding="htmlcontent" />
+            </label>
+            <input type="text" class="form-control" id="city"
+                data-missing-error="${Resource.msg('address.city.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.city.attributes}" encoding="off" />
+            autocomplete="address-level2" />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+
+    <!-- ZIP Code -->
+    <div class="col-6">
+        <div class="form-group
+                ${bussinessAddressFields.postalCode.mandatory === true ? 'required' : ''}">
+            <label class="form-control-label" for="zipCode">
+                <isprint value="${bussinessAddressFields.postalCode.label}" encoding="htmlcontent" />
+            </label>
+            <input type="text" class="form-control" id="zipCode"
+                data-missing-error="${Resource.msg('address.zipcode.missing', 'forms', null)}" <isprint
+                value="${bussinessAddressFields.postalCode.attributes}" encoding="off" />
+            autocomplete="postal-code" />
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Phone Number -->
+<div class="form-group
+        ${bussinessAddressFields.phone.mandatory === true ? 'required' : ''}">
+    <label class="form-control-label" for="phone">
+        <isprint value="${bussinessAddressFields.phone.label}" encoding="htmlcontent" />
+    </label>
+    <input type="text" class="form-control" id="phone"
+        data-missing-error="${Resource.msg('address.phone.missing', 'forms', null)}" <isprint
+        value="${bussinessAddressFields.phone.attributes}" encoding="off" />
+    autocomplete="tel" />
+    <div class="invalid-feedback"></div>
+</div>
+
+<input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+<input type="hidden" class="js-address-type" name="addressType" value="bussiness" />
+
+<!-- Cancel and Save Buttons -->
+<div class="row">
+    <div class="col-6">
+        <a href="${URLUtils.url('Address-List')}"
+            class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel', 'account', null)}</a>
+    </div>
+    <div class="col-6">
+        <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save', 'account', null)}</button>
+    </div>
+</div>
+
+</form>
