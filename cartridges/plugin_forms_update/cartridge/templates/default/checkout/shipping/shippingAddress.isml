@@ -1,0 +1,348 @@
+<isset name="privateAddressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields.privateAddress}" scope="page"/>
+<isset name="bussinessAddressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields.bussinessAddress}" scope="page"/>
+
+<isif condition="${shippingModel.shippingAddress}">
+    <isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />
+<iselse/>
+    <isset name="shippingAddress" value="${{}}" scope="page" />
+</isif>
+
+<isinclude template="account/components/addressTypeSelect" />
+
+<div class="js-private-address-form">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.firstName.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.firstName.htmlName}">
+                <label class="form-control-label" for="shippingFirstName${lineItem ? lineItem.UUID : 'default'}"  >
+                    ${Resource.msg('field.shipping.address.first.name','address',null)}
+                </label>
+                <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}FirstName"
+                    value="${shippingAddress.firstName||''}" <isprint value="${privateAddressFields.firstName.attributes}" encoding="off"/>
+                    autocomplete="shipping given-name" >
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}FirstName"><isprint value="${privateAddressFields.firstName.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.lastName.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.lastName.htmlName}">
+                <label class="form-control-label" for="shippingLastName${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.last.name','address',null)}
+                </label>
+                <input type="text" class="form-control shippingLastName" id="shippingLastName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}LastName"
+                    value="${shippingAddress.lastName||''}" <isprint value="${privateAddressFields.lastName.attributes}" encoding="off"/>
+                    autocomplete="shipping family-name">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}LastName"><isprint value="${privateAddressFields.lastName.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${privateAddressFields.address1.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.address1.htmlName}">
+                <label class="form-control-label" for="shippingAddressOne${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.one','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}AddressLine1"
+                    value="${shippingAddress.address1||''}" <isprint value="${privateAddressFields.address1.attributes}" encoding="off"/>
+                    autocomplete="shipping address-line1">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}AddressLine1"><isprint value="${privateAddressFields.address1.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${privateAddressFields.address2.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.address2.htmlName}">
+                <label class="form-control-label" for="shippingAddressTwo${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.two','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}AddressLine2"
+                    value="${shippingAddress.address2||''}" <isprint value="${privateAddressFields.address2.attributes}" encoding="off"/>
+                    autocomplete="shipping address-line2">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}AddressLine2"><isprint value="${privateAddressFields.address2.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <!--- make drop down--->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.country.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.country.htmlName}">
+                <label class="form-control-label" for="shippingCountry${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.country','address',null)}
+                </label>
+                <select class="form-control shippingCountry custom-select" id="shippingCountry${lineItem ? lineItem.UUID : 'default'}"
+                    <isprint value=${privateAddressFields.country.attributes} encoding="off"/>
+                    autocomplete="shipping country"
+                    aria-describedby="${lineItem ? lineItem.UUID : 'default'}Country">
+                        <option label=" "></option>
+                        <isloop items=${privateAddressFields.country.options} var="country">
+                            <option id="${country.id}" value="${country.htmlValue}" ${shippingAddress.countryCode && country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
+                        </isloop>
+                </select>
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}Country"><isprint value="${privateAddressFields.country.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.states.stateCode.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.states.stateCode.htmlName}">
+                <label class="form-control-label" for="shippingState${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.state','address',null)}
+                </label>
+                <select class="form-control shippingState custom-select" id="shippingState${lineItem ? lineItem.UUID : 'default'}"
+                    <isprint value=${privateAddressFields.states.stateCode.attributes} encoding="off"/>
+                    autocomplete="shipping address-level1"
+                    aria-describedby="${lineItem ? lineItem.UUID : 'default'}State">
+                    <isloop items=${privateAddressFields.states.stateCode.options} var="state">
+                        <option id="${state.id}" value="${state.htmlValue}" ${state.id===shippingAddress.stateCode ? 'selected' : ''}>${state.label || ' '}</option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}State"><isprint value="${privateAddressFields.states.stateCode.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.city.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.city.htmlName}">
+                <label class="form-control-label" for="shippingAddressCity${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.city','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}City"
+                    value="${shippingAddress.city||''}" <isprint value="${privateAddressFields.city.attributes}" encoding="off"/>
+                    autocomplete="shipping address-level2">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}City"><isprint value="${privateAddressFields.city.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${privateAddressFields.postalCode.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.postalCode.htmlName}">
+                <label class="form-control-label" for="shippingZipCode${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.zip.code','address',null)}
+                </label>
+                <input type="text" class="form-control shippingZipCode" id="shippingZipCode${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}ZipCode"
+                    value="${shippingAddress.postalCode||''}" <isprint value="${privateAddressFields.postalCode.attributes}" encoding="off"/>
+                    autocomplete="shipping postal-code">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}ZipCode"><isprint value="${privateAddressFields.postalCode.error}" ></div>
+                <span>${Resource.msg('example.postalcode','forms',null)}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${privateAddressFields.phone.mandatory === true ? 'required' : ''}
+                ${privateAddressFields.phone.htmlName}">
+                <label class="form-control-label" for="shippingPhoneNumber${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.phone','address',null)}
+                </label>
+                <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"
+                    value="${shippingAddress.phone||''}" <isprint value="${privateAddressFields.phone.attributes}" encoding="off"/>
+                    autocomplete="shipping tel">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"><isprint value="${privateAddressFields.phone.error}" ></div>
+                <span>${Resource.msg('example.phone','forms',null)}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="js-bussiness-address-form d-none">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.firstName.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.firstName.htmlName}">
+                <label class="form-control-label" for="shippingFirstName${lineItem ? lineItem.UUID : 'default'}"  >
+                    ${Resource.msg('field.shipping.address.first.name','address',null)}
+                </label>
+                <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}FirstName"
+                    value="${shippingAddress.firstName||''}" <isprint value="${bussinessAddressFields.firstName.attributes}" encoding="off"/>
+                    autocomplete="shipping given-name" >
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}FirstName"><isprint value="${bussinessAddressFields.firstName.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.lastName.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.lastName.htmlName}">
+                <label class="form-control-label" for="shippingLastName${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.last.name','address',null)}
+                </label>
+                <input type="text" class="form-control shippingLastName" id="shippingLastName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}LastName"
+                    value="${shippingAddress.lastName||''}" <isprint value="${bussinessAddressFields.lastName.attributes}" encoding="off"/>
+                    autocomplete="shipping family-name">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}LastName"><isprint value="${bussinessAddressFields.lastName.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Name -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                    ${bussinessAddressFields.companyName.mandatory === true ? 'required' : ''}
+                    ${bussinessAddressFields.companyName.htmlName}">
+                <label class="form-control-label" for="shippingCompanyName${lineItem ? lineItem.UUID : 'default'}">
+                    <isprint value="${bussinessAddressFields.companyName.label}" encoding="htmlcontent" />
+                </label>
+                <input type="text" class="form-control CompanyName" id="shippingCompanyName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}CompanyName"
+                    value="${shippingAddress.companyName||''}" <isprint value="${bussinessAddressFields.companyName.attributes}" encoding="off"/>
+                    autocomplete="shipping family-name" />
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}CompanyName"><isprint value="${bussinessAddressFields.companyName.error}" /></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VAT -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                    ${bussinessAddressFields.vat.mandatory === true ? 'required' : ''}
+                    ${bussinessAddressFields.vat.htmlName}">
+                <label class="form-control-label" for="shippingVat${lineItem ? lineItem.UUID : 'default'}">
+                    <isprint value="${bussinessAddressFields.vat.label}" encoding="htmlcontent" />
+                </label>
+                <input type="text" class="form-control Vat" id="shippingVat${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}Vat"
+                    value="${shippingAddress.vat||''}" <isprint value="${bussinessAddressFields.vat.attributes}" encoding="off"/>
+                    autocomplete="shipping family-name" />
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}Vat"><isprint value="${bussinessAddressFields.vat.error}" /></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${bussinessAddressFields.address1.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.address1.htmlName}">
+                <label class="form-control-label" for="shippingAddressOne${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.one','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}AddressLine1"
+                    value="${shippingAddress.address1||''}" <isprint value="${bussinessAddressFields.address1.attributes}" encoding="off"/>
+                    autocomplete="shipping address-line1">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}AddressLine1"><isprint value="${bussinessAddressFields.address1.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${bussinessAddressFields.address2.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.address2.htmlName}">
+                <label class="form-control-label" for="shippingAddressTwo${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.two','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}AddressLine2"
+                    value="${shippingAddress.address2||''}" <isprint value="${bussinessAddressFields.address2.attributes}" encoding="off"/>
+                    autocomplete="shipping address-line2">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}AddressLine2"><isprint value="${bussinessAddressFields.address2.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <!--- make drop down--->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.country.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.country.htmlName}">
+                <label class="form-control-label" for="shippingCountry${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.country','address',null)}
+                </label>
+                <select class="form-control shippingCountry custom-select" id="shippingCountry${lineItem ? lineItem.UUID : 'default'}"
+                    <isprint value=${bussinessAddressFields.country.attributes} encoding="off"/>
+                    autocomplete="shipping country"
+                    aria-describedby="${lineItem ? lineItem.UUID : 'default'}Country">
+                        <option label=" "></option>
+                        <isloop items=${bussinessAddressFields.country.options} var="country">
+                            <option id="${country.id}" value="${country.htmlValue}" ${shippingAddress.countryCode && country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
+                        </isloop>
+                </select>
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}Country"><isprint value="${bussinessAddressFields.country.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.states.stateCode.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.states.stateCode.htmlName}">
+                <label class="form-control-label" for="shippingState${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.state','address',null)}
+                </label>
+                <select class="form-control shippingState custom-select" id="shippingState${lineItem ? lineItem.UUID : 'default'}"
+                    <isprint value=${bussinessAddressFields.states.stateCode.attributes} encoding="off"/>
+                    autocomplete="shipping address-level1"
+                    aria-describedby="${lineItem ? lineItem.UUID : 'default'}State">
+                    <isloop items=${bussinessAddressFields.states.stateCode.options} var="state">
+                        <option id="${state.id}" value="${state.htmlValue}" ${state.id===shippingAddress.stateCode ? 'selected' : ''}>${state.label || ' '}</option>
+                    </isloop>
+                </select>
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}State"><isprint value="${bussinessAddressFields.states.stateCode.error}" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.city.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.city.htmlName}">
+                <label class="form-control-label" for="shippingAddressCity${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.city','address',null)}
+                </label>
+                <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}City"
+                    value="${shippingAddress.city||''}" <isprint value="${bussinessAddressFields.city.attributes}" encoding="off"/>
+                    autocomplete="shipping address-level2">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}City"><isprint value="${bussinessAddressFields.city.error}" ></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group
+                ${bussinessAddressFields.postalCode.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.postalCode.htmlName}">
+                <label class="form-control-label" for="shippingZipCode${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.zip.code','address',null)}
+                </label>
+                <input type="text" class="form-control shippingZipCode" id="shippingZipCode${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}ZipCode"
+                    value="${shippingAddress.postalCode||''}" <isprint value="${bussinessAddressFields.postalCode.attributes}" encoding="off"/>
+                    autocomplete="shipping postal-code">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}ZipCode"><isprint value="${bussinessAddressFields.postalCode.error}" ></div>
+                <span>${Resource.msg('example.postalcode','forms',null)}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group
+                ${bussinessAddressFields.phone.mandatory === true ? 'required' : ''}
+                ${bussinessAddressFields.phone.htmlName}">
+                <label class="form-control-label" for="shippingPhoneNumber${lineItem ? lineItem.UUID : 'default'}">
+                    ${Resource.msg('field.shipping.address.phone','address',null)}
+                </label>
+                <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"
+                    value="${shippingAddress.phone||''}" <isprint value="${bussinessAddressFields.phone.attributes}" encoding="off"/>
+                    autocomplete="shipping tel">
+                <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"><isprint value="${bussinessAddressFields.phone.error}" ></div>
+                <span>${Resource.msg('example.phone','forms',null)}</span>
+            </div>
+        </div>
+    </div>
+</div>

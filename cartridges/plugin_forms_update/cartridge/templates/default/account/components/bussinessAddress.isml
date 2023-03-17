@@ -1,16 +1,16 @@
 <h2 class="my-2 w-100 text-center">${Resource.msg("label.bussiness.address.form", "forms", null)}</h2>
 
-<form action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}" class="address-form js-address-form" method="POST"
-    <isprint value="${bussinessAddressFields.attributes}" encoding="off" />>
+<form action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}" class="address-form js-address-form"
+    method="POST" <isprint value="${bussinessAddressFields.attributes}" encoding="off" />>
 <!-- Address Title -->
-<div class="form-group
-        ${bussinessAddressFields.addressId.mandatory === true ? 'required' : ''}">
+<div class="form-group required">
     <label class="form-control-label" for="addressId">
         <isprint value="${bussinessAddressFields.addressId.label}" encoding="htmlcontent" />
     </label>
     <input type="text" class="form-control" id="addressId"
         data-missing-error="${Resource.msg('error.message.required', 'forms', null)}" <isprint
-        value="${bussinessAddressFields.addressId.attributes}" encoding="off" /> />
+        value="${bussinessAddressFields.addressId.attributes}" encoding="off" /> 
+        required/>
     <div class="invalid-feedback"></div>
 </div>
 

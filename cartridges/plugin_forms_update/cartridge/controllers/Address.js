@@ -1,13 +1,13 @@
-const csrfProtection = require("*/cartridge/scripts/middleware/csrf");
 const server = require("server");
+const csrfProtection = require("*/cartridge/scripts/middleware/csrf");
+const addressTypeValidation = require("~/cartridge/scripts/middleware/addressType");
 
 const base = module.superModule;
 server.extend(base);
 
-const ADDRESS_TYPES = {
-    private: "privateAddress",
-    bussiness: "bussinessAddress",
-};
+/**
+ * @namespace Address
+ */
 
 /**
  * Address-SaveAddress : Save a new or existing address
@@ -15,6 +15,7 @@ const ADDRESS_TYPES = {
  * @function
  * @memberof Address
  * @param {middleware} - csrfProtection.validateAjaxRequest
+ * @param {middleware} - addressTypeValidation.validateType
  * @param {querystringparameter} - addressId - a string used to identify the address record
  * @param {httpparameter} - dwfrm_address_addressId - An existing address id (unless new record)
  * @param {httpparameter} - dwfrm_address_firstName - A person’s first name
@@ -34,6 +35,7 @@ const ADDRESS_TYPES = {
 server.replace(
     "SaveAddress",
     csrfProtection.validateAjaxRequest,
+    addressTypeValidation.validateType,
     function (req, res, next) {
         const CustomerMgr = require("dw/customer/CustomerMgr");
         const Transaction = require("dw/system/Transaction");
@@ -42,15 +44,11 @@ server.replace(
         const accountHelpers = require("*/cartridge/scripts/helpers/accountHelpers");
         const addressHelpers = require("*/cartridge/scripts/helpers/addressHelpers");
 
-        const addressType = ADDRESS_TYPES[req.querystring.addressType];
-        if (!addressType) {
-            return res.json({ success: false });
-        }
-
         const baseForm = server.forms.getForm("address");
         const baseFormObj = baseForm.toObject();
         baseFormObj.addressForm = baseForm;
 
+        const addressType = res.getViewData().addressType;
         const addressForm = baseForm[addressType];
 
         const customer = CustomerMgr.getCustomerByCustomerNumber(

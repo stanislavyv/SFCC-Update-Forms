@@ -3,23 +3,6 @@
 const base = require('base/addressBook/addressBook');;
 
 /**
- * Allows functionality to select from different address type forms
- */
-function changeFormType() {
-    const $radioBtns = $('.js-address-type input[name="addressType"]');
-
-    $radioBtns.on("change", function () {
-        const $currBtn = $radioBtns.filter(":checked");
-
-        const formSelector = `.js-${$currBtn.val()}-address-form`;
-        const $newActiveForm = $(formSelector);
-
-        $newActiveForm.removeClass("d-none");
-        $newActiveForm.siblings('[class$="address-form"]').addClass("d-none");
-    });
-};
-
-/**
  * Submits address form
  */
  function submitAddress() {
@@ -64,7 +47,6 @@ function changeFormType() {
     });
 };
 
-base.changeFormType = changeFormType;
 base.submitAddress = submitAddress;
 
 module.exports = base;

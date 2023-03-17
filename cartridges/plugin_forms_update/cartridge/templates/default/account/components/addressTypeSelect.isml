@@ -1,0 +1,21 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/addressType.js');
+</isscript>
+
+<div class="card-header p-0 pb-3 mb-3 js-address-type-wrapper">
+    <h4 class="mb-1">${Resource.msg("label.select.address.type", "forms", null)}</h4>
+
+    <div class="form-check js-address-type">
+        <input class="form-check-input" type="radio" name="addressType" id="privateAddress" value="private" checked />
+        <label class="form-check-label" for="privateAddress">
+            ${Resource.msg("label.input.private.address.radio", "forms", null)}
+        </label>
+    </div>
+    <div class="form-check js-address-type">
+        <input class="form-check-input" type="radio" name="addressType" id="bussinessAddress" value="bussiness" />
+        <label class="form-check-label" for="bussinessAddress">
+            ${Resource.msg("label.input.bussiness.address.radio", "forms", null)}
+        </label>
+    </div>
+</div>
