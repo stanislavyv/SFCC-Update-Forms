@@ -1,0 +1,45 @@
+<form action="${pdict.createAccountUrl}" class="registration" method="POST"
+    name="${pdict.profileForm.register.htmlName}">
+
+    <div class="form-group
+        <isif condition=" ${!!pdict.profileForm.register.customer.email.mandatory === true}">required</isif>">
+        <label class="form-control-label" for="registration-form-email">
+            <isprint value="${pdict.profileForm.register.customer.email.label}" encoding="htmlcontent" />
+        </label>
+        <input type="text" class="form-control" id="registration-form-email"
+            data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+            data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form', 'forms', null)}"
+            data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
+            aria-describedby="form-email-error" <isprint value=${pdict.profileForm.register.customer.email.attributes}
+            encoding="off" />>
+        <div class="invalid-feedback" id="form-email-error"></div>
+    </div>
+
+    <div class="form-group
+        <isif condition=" ${!!pdict.profileForm.register.login.password.mandatory === true}">required</isif>">
+        <label class="form-control-label" for="registration-form-password">
+            <isprint value="${pdict.profileForm.register.login.password.label}" encoding="htmlcontent" />
+        </label>
+        <div class="position-relative">
+            <input type="password" class="form-control pr-4 js-password-field" id="registration-form-password"
+                data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                data-range-error="${Resource.msg('error.message.8_255characters', 'forms', null)}"
+                aria-describedby="form-password-error" autocomplete="off" <isprint
+                value=${pdict.profileForm.register.login.password.attributes} encoding="off" />>
+            <div class="invalid-feedback" id="form-password-error"></div>
+            <i class="fa fa-eye password-mask js-password-mask text-secondary position-absolute"></i>
+        </div>
+    </div>
+
+    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+
+    <button type="submit" class="btn btn-block btn-primary">
+        ${Resource.msg('button.createaccount.registration', 'registration', null)}
+    </button>
+    <div class="privacy-policy">
+        ${Resource.msg('description.privacypolicy.registration', 'registration', null)}
+        <a href="${'#'}">
+            ${Resource.msg('link.privacypolicy.registration', 'registration', null)}
+        </a>
+    </div>
+</form>
