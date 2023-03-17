@@ -28,11 +28,14 @@ function createAddressObject(addressObject) {
             salutation: addressObject.salutation,
             secondName: addressObject.secondName,
             companyName: addressObject.companyName,
-            vat: addressObject.custom.vat,
             suffix: addressObject.suffix,
             suite: addressObject.suite,
             title: addressObject.title
         };
+
+        if (addressObject.custom && Object.hasOwnProperty.call(addressObject.custom, 'vat')) {
+            result.vat = addressObject.custom.vat;
+        }
 
         if (result.stateCode === 'undefined') {
             result.stateCode = '';
