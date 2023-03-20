@@ -1,4 +1,4 @@
-<form action="${pdict.createAccountUrl}" class="registration" method="POST"
+<form action="${pdict.createAccountUrl}" class="registration js-registration" method="POST"
     name="${pdict.profileForm.register.htmlName}">
 
     <div class="form-group
@@ -33,7 +33,9 @@
 
     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
 
-    <button type="submit" class="btn btn-block btn-primary">
+    <button type="submit" class="g-recaptcha js-registration-submit btn btn-block btn-primary"
+        data-sitekey="${pdict.reCaptcha.siteKey || ''}" data-callback='verifyReCaptcha' data-action='submit'
+        data-verify-url="${pdict.reCaptcha.verifyUrl || ''}">
         ${Resource.msg('button.createaccount.registration', 'registration', null)}
     </button>
     <div class="privacy-policy">
@@ -43,3 +45,6 @@
         </a>
     </div>
 </form>
+
+<iscomment> Load reCAPTCHA API </iscomment>
+<script src="https://www.google.com/recaptcha/api.js"></script>

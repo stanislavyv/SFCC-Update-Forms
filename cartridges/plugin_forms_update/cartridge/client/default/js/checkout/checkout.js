@@ -284,7 +284,6 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
                     const $form = $('form#dwfrm_billing'); 
                     const addressType = $form.find('.js-address-type input[name="addressType"]:checked').val();
-                    console.log(addressType);
                     const url = $form.attr('action');
 
                      // disable the next:Place Order button here

@@ -1,3 +1,5 @@
+**/constants/reCaptcha.json
+
 .circleci
 bin
 .editorconfig
