@@ -1,31 +1,31 @@
 <form action="${pdict.createAccountUrl}" class="registration js-registration" method="POST"
-    name="${pdict.profileForm.register.htmlName}">
+    name="${pdict.profileForm.htmlName}">
 
     <div class="form-group
-        <isif condition=" ${!!pdict.profileForm.register.customer.email.mandatory === true}">required</isif>">
+        <isif condition=" ${!!pdict.profileForm.customer.email.mandatory === true}">required</isif>">
         <label class="form-control-label" for="registration-form-email">
-            <isprint value="${pdict.profileForm.register.customer.email.label}" encoding="htmlcontent" />
+            <isprint value="${pdict.profileForm.customer.email.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="registration-form-email"
             data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
             data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form', 'forms', null)}"
             data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}"
-            aria-describedby="form-email-error" <isprint value=${pdict.profileForm.register.customer.email.attributes}
+            aria-describedby="form-email-error" <isprint value=${pdict.profileForm.customer.email.attributes}
             encoding="off" />>
         <div class="invalid-feedback" id="form-email-error"></div>
     </div>
 
     <div class="form-group
-        <isif condition=" ${!!pdict.profileForm.register.login.password.mandatory === true}">required</isif>">
+        <isif condition=" ${!!pdict.profileForm.login.password.mandatory === true}">required</isif>">
         <label class="form-control-label" for="registration-form-password">
-            <isprint value="${pdict.profileForm.register.login.password.label}" encoding="htmlcontent" />
+            <isprint value="${pdict.profileForm.login.password.label}" encoding="htmlcontent" />
         </label>
         <div class="position-relative">
             <input type="password" class="form-control pr-4 js-password-field" id="registration-form-password"
                 data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
                 data-range-error="${Resource.msg('error.message.8_255characters', 'forms', null)}"
                 aria-describedby="form-password-error" autocomplete="off" <isprint
-                value=${pdict.profileForm.register.login.password.attributes} encoding="off" />>
+                value=${pdict.profileForm.login.password.attributes} encoding="off" />>
             <div class="invalid-feedback" id="form-password-error"></div>
             <i class="fa fa-eye password-mask js-password-mask text-secondary position-absolute"></i>
         </div>
@@ -47,4 +47,4 @@
 </form>
 
 <iscomment> Load reCAPTCHA API </iscomment>
-<script src="https://www.google.com/recaptcha/api.js"></script>
+<script src="${pdict.reCaptcha ? 'https://www.google.com/recaptcha/api.js' : ''}"></script>

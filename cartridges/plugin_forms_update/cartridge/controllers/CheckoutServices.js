@@ -6,7 +6,6 @@
 
 const server = require("server");
 const csrfProtection = require("*/cartridge/scripts/middleware/csrf");
-const addressTypeValidation = require("~/cartridge/scripts/middleware/addressType");
 
 const base = module.superModule;
 server.extend(base);
@@ -49,7 +48,6 @@ server.replace(
     "SubmitPayment",
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
-    addressTypeValidation.validateType,
     function (req, res, next) {
         const PaymentManager = require("dw/order/PaymentMgr");
         const HookManager = require("dw/system/HookMgr");
@@ -59,9 +57,7 @@ server.replace(
         const viewData = {};
         const paymentForm = server.forms.getForm("billing");
 
-        // Add addressType
-        const addressType = res.getViewData().addressType;
-        const addressFields = paymentForm.addressFields[addressType];
+        const addressFields = paymentForm.addressFields;
 
         // verify billing form data
         const billingFormErrors = COHelpers.validateBillingForm(addressFields);

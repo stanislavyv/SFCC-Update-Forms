@@ -2,6 +2,9 @@
  * Shows/ Hides password on eye icon click
  */
 function togglePassword() {
+    const faEyeIcon = "fa-eye";
+    const faEyeSlashIcon = "fa-eye-slash";
+    
     const $allBtns = $(".js-password-mask");
 
     $allBtns.each(function () {
@@ -10,14 +13,14 @@ function togglePassword() {
         $currBtn.on("click", function () {
             const $passwordField = $currBtn.siblings(".js-password-field");
 
-            if ($currBtn.hasClass("fa-eye")) {
-                $currBtn.removeClass("fa-eye");
-                $currBtn.addClass("fa-eye-slash");
+            if ($currBtn.hasClass(faEyeIcon)) {
+                $currBtn.removeClass(faEyeIcon);
+                $currBtn.addClass(faEyeSlashIcon);
 
                 $passwordField.attr("type", "text");
             } else {
-                $currBtn.removeClass("fa-eye-slash");
-                $currBtn.addClass("fa-eye");
+                $currBtn.removeClass(faEyeSlashIcon);
+                $currBtn.addClass(faEyeIcon);
 
                 $passwordField.attr("type", "password");
             }

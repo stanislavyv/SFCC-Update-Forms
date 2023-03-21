@@ -11,7 +11,7 @@ const Transaction = require("dw/system/Transaction");
 base.copyCustomerAddressToShipment = function (address, shipmentOrNull) {
     const currentBasket = BasketMgr.getCurrentBasket();
     const shipment = shipmentOrNull || currentBasket.defaultShipment;
-    const shippingAddress = shipment.shippingAddress;
+    let shippingAddress = shipment.shippingAddress;
 
     Transaction.wrap(function () {
         if (shippingAddress === null) {
@@ -102,7 +102,7 @@ base.copyShippingAddressToShipment = function (shippingData, shipmentOrNull) {
         shippingAddress.setCountryCode(countryCode);
         shippingAddress.setPhone(shippingData.address.phone);
 
-        if (shippingData.address.companyName) {
+        if (shippingData.address.companyName && shippingData.address.vat) {
             shippingAddress.setCompanyName(shippingData.address.companyName);
             shippingAddress.custom.vat = shippingData.address.vat;
         }
@@ -113,18 +113,6 @@ base.copyShippingAddressToShipment = function (shippingData, shipmentOrNull) {
         );
     });
 };
-
-/**
- * Validate billing form
- * @param {Object} form - the form object with pre-validated form fields
- * @returns {Object} the names of the invalid form fields
- */
-function validateFields(form) {
-    const formErrors = require('*/cartridge/scripts/formErrors');
-    return formErrors.getFormErrors(form);
-}
-
-base.validateFields = validateFields;
 
 /**
  * Validate credit card form fields
@@ -146,7 +134,7 @@ base.validateCreditCard = function(form) {
 
     const fieldsToValidate = form.creditCardFields || form;
 
-    return validateFields(fieldsToValidate);
+    return base.validateFields(fieldsToValidate);
 }
 
 module.exports = base;

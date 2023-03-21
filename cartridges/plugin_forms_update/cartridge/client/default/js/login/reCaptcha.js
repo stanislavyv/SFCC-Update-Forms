@@ -16,8 +16,9 @@ function verifyReCaptcha(token) {
         dataType: "json",
         data: { token },
         success: function (data) {
+            $form.spinner().stop();
+
             if (!data.success) {
-                $form.spinner().stop();
                 createErrorNotification(
                     $(".error-messaging"),
                     data.errorMessage
@@ -27,6 +28,7 @@ function verifyReCaptcha(token) {
             }
         },
         error: function (err) {
+            $form.spinner().stop();
             createErrorNotification(
                 $(".error-messaging"),
                 err.responseJSON.errorMessage

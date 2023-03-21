@@ -6,7 +6,6 @@
 
 const server = require('server');
 const csrfProtection = require('*/cartridge/scripts/middleware/csrf');
-const addressTypeValidation = require('~/cartridge/scripts/middleware/addressType');
 
 const base = module.superModule;
 server.extend(base);
@@ -44,7 +43,6 @@ server.replace(
     'SubmitShipping',
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
-    addressTypeValidation.validateType,
     function (req, res, next) {
         const BasketMgr = require('dw/order/BasketMgr');
         const URLUtils = require('dw/web/URLUtils');
@@ -77,9 +75,8 @@ server.replace(
 
         // add addressType
         const form = server.forms.getForm('shipping');
-        const addressType = res.getViewData().addressType;
 
-        const addressFields = form.shippingAddress.addressFields[addressType];
+        const addressFields = form.shippingAddress.addressFields;
         const result = {};
 
         // verify shipping form data

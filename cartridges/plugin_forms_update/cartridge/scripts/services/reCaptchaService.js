@@ -24,7 +24,10 @@ const reCaptchaService = LocalServiceRegistry.createService(SERVICE_NAME, {
         }
 
         return result;
-    }
+    },
+    filterLogMessage(msg) {
+        return msg;
+    },
 });
 
 module.exports = reCaptchaService;

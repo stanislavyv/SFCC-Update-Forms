@@ -5,6 +5,7 @@
  */
 
 const server = require("server");
+const reCaptchaData = require("~/cartridge/scripts/middleware/reCaptchaData");
 
 const base = module.superModule;
 server.extend(base);
@@ -14,26 +15,10 @@ server.extend(base);
  * @name Base/Login-Show
  * @function
  * @memberof Login
+ * @param {middleware} - reCaptchaData.attachReCaptchaData
  * @param {category} - sensitive
  * @param {serverfunction} - get
  */
-server.append("Show", function (req, res, next) {
-    const URLUtils = require('dw/web/URLUtils');
-    const Site = require("dw/system/Site");
-    const currSite = Site.getCurrent();
-
-    const RECAPTCHA_KEYS = require('~/cartridge/constants/reCaptcha');
-
-    const reCaptchaConfig = {
-        siteKey: currSite.getCustomPreferenceValue(RECAPTCHA_KEYS["site"]),
-        verifyUrl: URLUtils.url("ReCaptcha-Verify")
-    };
-
-    const viewData = res.getViewData();
-    viewData.reCaptcha = reCaptchaConfig;
-    res.setViewData(viewData);
-
-    next();
-});
+server.append("Show", reCaptchaData.attachReCaptchaData);
 
 module.exports = server.exports();
